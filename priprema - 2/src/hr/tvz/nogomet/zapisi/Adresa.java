@@ -1,4 +1,4 @@
 package hr.tvz.nogomet.zapisi;
 
-public class Adresa {
+public record Adresa(String ulica, String kucniBroj, String grad) {
 }

@@ -1,39 +1,19 @@
 package hr.tvz.nogomet.klase;
 
-public class Stadion {
-    private String naziv;
-    private String grad;
+import hr.tvz.nogomet.apstraktne.Gradjevina;
+import hr.tvz.nogomet.zapisi.Adresa;
+
+public class Stadion extends Gradjevina {
+
     private Integer kapacitet;
     private Integer godinaIzgradnje;
     private Boolean natkriven;
 
-    public Stadion(String naziv, String grad) {
-        this.naziv = naziv;
-        this.grad = grad;
-    }
-
-    public Stadion(String naziv, String grad, Integer kapacitet, Integer godinaIzgradnje, Boolean natkriven) {
-        this.naziv = naziv;
-        this.grad = grad;
+    public Stadion(String naziv, Adresa adresa, Integer kapacitet, Integer godinaIzgradnje, Boolean natkriven) {
+        super(naziv, adresa);
         this.kapacitet = kapacitet;
         this.godinaIzgradnje = godinaIzgradnje;
         this.natkriven = natkriven;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-
-    public String getGrad() {
-        return grad;
-    }
-
-    public void setGrad(String grad) {
-        this.grad = grad;
     }
 
     public Integer getKapacitet() {
@@ -58,5 +38,13 @@ public class Stadion {
 
     public void setNatkriven(Boolean natkriven) {
         this.natkriven = natkriven;
+    }
+
+    @Override
+    public String getKapacitetZaIspis() {
+        if (kapacitet == null ){
+            return 	"Kapacitet: nije unesen";
+        }
+        return 	"Kapacitet: " + kapacitet + " gledatelja";
     }
 }

@@ -1,4 +1,5 @@
 package hr.tvz.nogomet.enumeracije;
 
-public class Pozicija {
+public enum Pozicija {
+    VRATAR, BRANIC, VEZNJAK, NAPADAC
 }

@@ -1,16 +1,15 @@
 package hr.tvz.nogomet.aplikacija;
 
-import hr.tvz.nogomet.klase.Igrac;
-import hr.tvz.nogomet.klase.NogometniKlub;
-import hr.tvz.nogomet.klase.Stadion;
-import hr.tvz.nogomet.klase.Trener;
+import hr.tvz.nogomet.apstraktne.Gradjevina;
+import hr.tvz.nogomet.enumeracije.Pozicija;
+import hr.tvz.nogomet.klase.*;
+import hr.tvz.nogomet.zapisi.Adresa;
 
 import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
         System.out.print("Koliko klubova želite unijeti: ");
         int brojKlubova = scanner.nextInt();
         scanner.nextLine();
@@ -25,19 +24,7 @@ public class Main{
             System.out.print("Godina osnivanja: ");
             int godinaOsnivanja = scanner.nextInt();
             scanner.nextLine();
-            String nazivStadiona = procitajString(scanner, "Naziv stadiona: ");
-            String gradStadiona = procitajString(scanner, "Grad stadiona: ");
-            System.out.print("Kapacitet: ");
-            Integer kapacitet = scanner.nextInt();
-            scanner.nextLine();
-            System.out.print("Godina izgradnje: ");
-            Integer godinaIzgradnje = scanner.nextInt();
-            scanner.nextLine();
-            System.out.print("Je li stadion natkriven (true/false): ");
-            Boolean natkriven = scanner.nextBoolean();
-            scanner.nextLine();
-            Stadion stadion = new Stadion(nazivStadiona, gradStadiona, kapacitet, godinaIzgradnje, natkriven);
-
+            //
             String imeTrenera = procitajString(scanner, "Ime trenera: ");
             String prezimeTrenera = procitajString(scanner, "Prezime trenera: ");
             System.out.print("Godina rođenja: ");
@@ -47,7 +34,7 @@ public class Main{
             int godineIskustva = scanner.nextInt();
             scanner.nextLine();
             Trener trener = new Trener(imeTrenera, prezimeTrenera, godinaRodenjaTrenera, godineIskustva);
-
+            //
             System.out.print("Koliko igrača želite unijeti: ");
             int brojIgraca = scanner.nextInt();
             scanner.nextLine();
@@ -64,11 +51,84 @@ public class Main{
                 System.out.print("Broj dresa: ");
                 int brojDresa = scanner.nextInt();
                 scanner.nextLine();
-                String pozicija = procitajString(scanner, "Pozicija: ");
-                igraci[j] = new Igrac(imeIgraca, prezimeIgraca, godinaRodenjaIgraca, brojDresa, pozicija);
+
+                String pozicija;
+                System.out.print("Pozicija (1 - VRATAR, 2 - BRANIC, 3 - VEZNJAK, 4 - NAPADAC): ");
+                int poz = scanner.nextInt();
+                scanner.nextLine();
+                switch (poz) {
+                    case 1:  pozicija = "VRATAR"; break;
+                    case 2:  pozicija = "BRANIC"; break;
+                    case 3:  pozicija = "VEZNJAK"; break;
+                    case 4:  pozicija = "NAPADAC"; break;
+                    default: pozicija = "err"; break;
+                }
+                igraci[j] = new Igrac(imeIgraca, prezimeIgraca, godinaRodenjaIgraca, brojDresa,Pozicija.valueOf(pozicija));
             }
 
-            klubovi[i] = new NogometniKlub(nazivKluba, gradKluba, godinaOsnivanja, stadion, trener, igraci);
+            //
+
+            System.out.print("Koliko građevina želite unijeti: ");
+            int brojGradjevina = scanner.nextInt();
+            scanner.nextLine();
+            Gradjevina[] gradjevine = new Gradjevina[brojGradjevina];
+
+            for (int j = 0; j < brojGradjevina; j++){
+                System.out.println();
+                System.out.println("--- GRAĐEVINA " + (j + 1) + " ---");
+
+                System.out.print("Vrsta (1 - Stadion, 2 - MedicinskaOrdinacija, 3 - SportskiDom): ");
+                int vrsta = scanner.nextInt();
+                scanner.nextLine();
+
+                String nazivGradjevine = procitajString(scanner, "Naziv: ");
+                String ulicaGradjevine = procitajString(scanner, "Ulica: ");
+
+                String brojGradjevine = procitajString(scanner, "Kućni broj: ");
+
+                String gradGradjevine = procitajString(scanner, "Grad: ");
+
+                Adresa adresa = new Adresa(ulicaGradjevine,"" + brojGradjevine,gradGradjevine);
+                if(vrsta == 1){
+                    System.out.print("Kapacitet: ");
+                    int kapacitet = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Godina izgradnje: ");
+                    int godinaIzgradnje = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Natkriven (true/false): ");
+                    Boolean natkriven = scanner.nextBoolean();
+                    scanner.nextLine();
+                    gradjevine[j] = new Stadion(nazivGradjevine,adresa,kapacitet,godinaIzgradnje,natkriven);
+                }else if(vrsta == 2){
+                    System.out.print("Broj ambulatni: ");
+                    int brojAmbulatni = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Ima hitnu službu (true/false): ");
+                    Boolean hitna = scanner.nextBoolean();
+                    scanner.nextLine();
+
+                    gradjevine[j] = new MedicinskaOrdinacija(nazivGradjevine,adresa,brojAmbulatni,hitna);
+
+                }else if(vrsta == 3){
+                    System.out.print("Broj kreveta: ");
+                    int brojKreveta = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Ima blagavaonicu (true/false): ");
+                    Boolean blagavaonica = scanner.nextBoolean();
+                    scanner.nextLine();
+
+                    gradjevine[j] = new SportskiDom(nazivGradjevine,adresa,brojKreveta,blagavaonica);
+
+                }
+
+            }
+
+            klubovi[i] = new NogometniKlub(nazivKluba, gradKluba, godinaOsnivanja, trener, igraci, gradjevine);
         }
 
         while (true) {

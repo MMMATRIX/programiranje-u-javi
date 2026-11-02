@@ -1,4 +1,5 @@
 package hr.tvz.nogomet.sucelja;
 
-public class Opisivo {
+public interface Opisivo {
+    String getOpis();
 }

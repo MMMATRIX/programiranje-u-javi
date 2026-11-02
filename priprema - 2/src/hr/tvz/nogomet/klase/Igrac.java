@@ -1,17 +1,15 @@
 package hr.tvz.nogomet.klase;
 
 import hr.tvz.nogomet.apstraktne.Osoba;
+import hr.tvz.nogomet.enumeracije.Pozicija;
 
 public class Igrac extends Osoba {
-    public static final String POZICIJA_VRATAR = "VRATAR";
-    public static final String POZICIJA_BRANIC = "BRANIC";
-    public static final String POZICIJA_VEZNJAK = "VEZNJAK";
-    public static final String POZICIJA_NAPADAC = "NAPADAC";
+
 
     private int brojDresa;
-    private String pozicija;
+    private Pozicija pozicija;
 
-    public Igrac(String ime, String prezime, int godinaRodenja, int brojDresa, String pozicija) {
+    public Igrac(String ime, String prezime, int godinaRodenja, int brojDresa, Pozicija pozicija) {
         super(ime, prezime, godinaRodenja);
         this.brojDresa = brojDresa;
         this.pozicija = pozicija;
@@ -25,11 +23,11 @@ public class Igrac extends Osoba {
         this.brojDresa = brojDresa;
     }
 
-    public String getPozicija() {
+    public Pozicija getPozicija() {
         return pozicija;
     }
 
-    public void setPozicija(String pozicija) {
+    public void setPozicija(Pozicija pozicija) {
         this.pozicija = pozicija;
     }
 }
